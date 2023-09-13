@@ -1,0 +1,24 @@
+{
+  "printWidth": 160,
+  "tabWidth": 4,
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "singleAttributePerLine": true,
+  "bracketSameLine": true,
+  "arrowParens": "avoid",
+
+  "overrides": [
+    {
+      "files": ["*.json"],
+      "options": {
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": ["./routes/api/*.js"],
+      "options": {
+        "printWidth": 65
+      }
+    }
+  ]
+}
