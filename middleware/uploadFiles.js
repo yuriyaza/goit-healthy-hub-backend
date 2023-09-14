@@ -2,13 +2,13 @@ const multer = require('multer');
 const path = require('node:path');
 
 const storage = multer.diskStorage({
-    destination: function (request, file, cb) {
+    destination: function (req, file, cb) {
         const tempDir = path.join(__dirname, '..', 'temp');
         cb(null, tempDir);
     },
 
-    filename: function (request, file, cb) {
-        const userID = request.user._id;
+    filename: function (req, file, cb) {
+        const userID = req.user._id;
         const originalFileName = file.originalname;
         const fileExt = path.parse(originalFileName).ext;
 

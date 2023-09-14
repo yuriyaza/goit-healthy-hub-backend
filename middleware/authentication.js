@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken');
 
-const { Users } = require('../models/auth');
+const { Users } = require('../models');
 const { asyncHandler, throwHttpError } = require('../utils');
 
 require('dotenv').config();
 const { TOKEN_KEY } = process.env;
 
-const authentication = asyncHandler(async function (request, response, next) {
-    const { authorization: authHeader } = request.headers;
+const authentication = asyncHandler(async function (req, res, next) {
+    const { authorization: authHeader } = req.headers;
     if (!authHeader) {
         throwHttpError(401, 'Unauthorized');
     }
@@ -30,7 +30,7 @@ const authentication = asyncHandler(async function (request, response, next) {
         throwHttpError(401, 'Unauthorized');
     }
 
-    request.user = user;
+    req.user = user;
     next();
 });
 

@@ -17,7 +17,7 @@
     {
       "files": ["./routes/api/*.js"],
       "options": {
-        "printWidth": 65
+        "printWidth": 75
       }
     }
   ]

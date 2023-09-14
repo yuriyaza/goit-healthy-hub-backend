@@ -1,9 +1,11 @@
+// В цьому каталозі розміщені контролери для авторизації
+// (реєстрація, логін, відновлення паролю тощо)
+
 const { currentUser } = require('./currentUser');
 const { registerUser } = require('./registerUser');
 const { loginUser } = require('./loginUser');
 const { logoutUser } = require('./logoutUser');
-const { verifyUser } = require('./verifyUser');
-const { resendCode } = require('./resendCode');
+const { restorePassword } = require('./restorePassword');
 const { updateAvatar } = require('./updateAvatar');
 
 module.exports = {
@@ -11,7 +13,6 @@ module.exports = {
     registerUser,
     loginUser,
     logoutUser,
-    verifyUser,
-    resendCode,
+    restorePassword,
     updateAvatar,
 };

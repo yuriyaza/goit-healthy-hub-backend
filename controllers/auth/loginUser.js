@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const { Users } = require('../../models/auth');
+const { Users } = require('../../models');
 const { asyncHandler, throwHttpError } = require('../../utils');
 
 require('dotenv').config();
 const { TOKEN_KEY } = process.env;
 
-const loginUser = asyncHandler(async (request, response) => {
-    const { email, password } = request.body;
+const loginUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
 
     const user = await Users.findOne({ email });
     if (!user) {
@@ -20,21 +20,20 @@ const loginUser = asyncHandler(async (request, response) => {
         throwHttpError(401, 'Incorrect email or password');
     }
 
-    const isEmailVerified = user.verifiedStatus;
-    if (!isEmailVerified) {
-        throwHttpError(401, 'Email is not verified');
-    }
-
     const payload = { id: user._id };
     const token = jwt.sign(payload, TOKEN_KEY, { expiresIn: '24h' });
     const loggedUser = await Users.findByIdAndUpdate(user._id, { token }, { returnDocument: 'after' });
 
-    response.status(201).json({
-        user: {
-            email: loggedUser.email,
-            subscription: loggedUser.subscription,
-            avatarURL: loggedUser.avatarURL,
-        },
+    res.status(201).json({
+        name: loggedUser.name,
+        email: loggedUser.email,
+        gender: loggedUser.gender,
+        age: loggedUser.age,
+        height: loggedUser.height,
+        weight: loggedUser.weight,
+        activity: loggedUser.activity,
+        goal: loggedUser.goal,
+        avatar: loggedUser.avatar,
         token,
     });
 });

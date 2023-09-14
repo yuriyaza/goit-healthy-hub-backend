@@ -1,12 +1,11 @@
 const bcrypt = require('bcrypt');
 const path = require('node:path');
-const { nanoid } = require('nanoid');
 
-const { Users } = require('../../models/auth');
-const { asyncHandler, throwHttpError, sendVerificationEmail } = require('../../utils');
+const { Users } = require('../../models');
+const { asyncHandler, throwHttpError } = require('../../utils');
 
-const registerUser = asyncHandler(async (request, response) => {
-    const { email, password } = request.body;
+const registerUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
 
     const isEmailExist = await Users.findOne({ email });
     if (isEmailExist) {
@@ -14,18 +13,20 @@ const registerUser = asyncHandler(async (request, response) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationCode = nanoid();
     const defaultAvatar = path.join(__dirname, '..', '..', 'public', 'avatars', 'default.png');
 
-    const newUser = await Users.create({ ...request.body, avatarURL: defaultAvatar, password: hashedPassword, verificationCode });
-    await sendVerificationEmail(newUser.email, newUser.verificationCode);
+    const registeredUser = await Users.create({ ...req.body, avatar: defaultAvatar, password: hashedPassword });
 
-    response.status(201).json({
-        user: {
-            email: newUser.email,
-            subscription: newUser.subscription,
-            avatarURL: newUser.avatarURL,
-        },
+    res.status(201).json({
+        name: registeredUser.name,
+        email: registeredUser.email,
+        gender: registeredUser.gender,
+        age: registeredUser.age,
+        height: registeredUser.height,
+        weight: registeredUser.weight,
+        activity: registeredUser.activity,
+        goal: registeredUser.goal,
+        avatar: registeredUser.avatar,
     });
 });
 

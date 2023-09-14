@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
 
-const { authRoutes } = require('../routes/api');
+const { authRoutes, userRoutes } = require('../routes/api');
 
 const app = express();
 
@@ -15,15 +15,16 @@ app.use(logger(app.get('env') === 'development' ? 'dev' : 'short'));
 app.use(express.static('public'));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
-app.use((request, response, next) => {
-    response.status(404).json({ message: 'Not found' });
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'Not found' });
 });
 
-app.use((error, request, response, next) => {
-    const errorCode = error.code || 500;
-    const errorMessage = error.message || 'Internal server error';
-    response.status(errorCode).json({ message: errorMessage });
+app.use((err, req, res, next) => {
+    const errorCode = err.code || 500;
+    const errorMessage = err.message || 'Internal server error';
+    res.status(errorCode).json({ message: errorMessage });
 });
 
 module.exports = { app };

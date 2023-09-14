@@ -1,14 +1,18 @@
 const { asyncHandler } = require('../../utils');
 
-const currentUser = asyncHandler(async (request, response) => {
-    const { email, subscription, avatarURL } = request.user;
+const currentUser = asyncHandler(async (req, res) => {
+    const currentUser = req.user;
 
-    response.status(200).json({
-        user: {
-            email,
-            subscription,
-            avatarURL,
-        },
+    res.status(200).json({
+        name: currentUser.name,
+        email: currentUser.email,
+        gender: currentUser.gender,
+        age: currentUser.age,
+        height: currentUser.height,
+        weight: currentUser.weight,
+        activity: currentUser.activity,
+        goal: currentUser.goal,
+        avatar: currentUser.avatar,
     });
 });
 

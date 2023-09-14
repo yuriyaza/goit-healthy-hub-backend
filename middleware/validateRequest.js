@@ -2,8 +2,8 @@ const { throwHttpError } = require('../utils');
 
 function validateRequest(schema) {
 
-    return function handler(request, response, next) {
-        const validateResult = schema.validate(request.body);
+    return function handler(req, res, next) {
+        const validateResult = schema.validate(req.body);
 
         if (validateResult.error) {
             let errorMessage = validateResult.error.message;

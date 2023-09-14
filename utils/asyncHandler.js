@@ -1,8 +1,8 @@
 function asyncHandler(func) {
 
-    return async function wrapper(request, response, next) {
+    return async function wrapper(req, res, next) {
         try {
-            await func(request, response, next);
+            await func(req, res, next);
         }
         catch (error) {
             next(error);
