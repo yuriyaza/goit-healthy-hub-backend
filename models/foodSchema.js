@@ -5,11 +5,6 @@ const foodSchema = Joi.object({
         'date.base': `Date should be a valid date`,
         'any.required': `Date is a required field`,
     }),
-    owner: Joi.string().required().messages({
-        'string.base': `Owner should be a type of string`,
-        'string.empty': `Owner cannot be an empty field`,
-        'any.required': `Owner is a required field`,
-    }),
     breakfast: Joi.array()
         .items(
             Joi.object({
