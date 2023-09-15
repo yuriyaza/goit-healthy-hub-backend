@@ -3,7 +3,13 @@
 // Створив один контролер для прикладу.
 
 const { addGoal } = require('./addGoal');
+const { updatedFoodIntake } = require('./updatedFoodIntake');
+const { waterIntake } = require('./waterIntake');
+const { getRecommendedFood } = require('./getRecommendedFood');
 
 module.exports = {
     addGoal,
+    waterIntake,
+    updatedFoodIntake,
+    getRecommendedFood,
 };
