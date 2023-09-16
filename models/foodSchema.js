@@ -1,8 +1,7 @@
 const Joi = require('joi');
 
 const foodSchema = Joi.object({
-    date: Joi.date().required().default(Date.now()).messages({
-        'date.base': `Date should be a valid date`,
+    date: Joi.date().default(Date.now()).messages({
         'any.required': `Date is a required field`,
     }),
     breakfast: Joi.array()
