@@ -15,4 +15,22 @@ userRoutes.patch(
     controller.addGoal
 );
 
+userRoutes.put(
+    "/food-intake/:id",
+    middleware.authentication,
+    middleware.validateRequest(schema.foodSchema),
+    controller.updatedFoodIntake
+);
+userRoutes.post(
+    "/water-intake",
+    middleware.authentication,
+    middleware.validateRequest(schema.waterSchema),
+    controller.waterIntake
+);
+userRoutes.get(
+    "/recommended-food",
+    middleware.authentication,
+    controller.getRecommendedFood
+);
+
 module.exports = { userRoutes };

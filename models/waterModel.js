@@ -1,25 +1,23 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
+const { handleMongooseError } = require('../utils/handleMongooseError');
 
-const waterDBSchema = new mongoose.Schema(
+const waterModal = new Schema(
     {
         date: {
             type: Date,
             required: [true, 'Date is required'],
             default: Date.now(),
         },
-        owner: {
-            type: String,
-            required: [true, 'Owner is required'],
-        },
         water: {
-            type: Number,
-            required: [true, 'Water quantity is required'],
+            type: Number, 
+            required: [true, 'Water is required'],
         },
     },
-
     { versionKey: false, timestamps: true }
 );
 
-const Water = mongoose.model('waters', waterDBSchema);
+waterModal.post('save', handleMongooseError);
+
+const Water = model('waters', waterModal);
 
 module.exports = { Water };
