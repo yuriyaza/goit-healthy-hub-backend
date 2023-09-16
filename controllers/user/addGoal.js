@@ -8,9 +8,7 @@ const addGoal = asyncHandler(async (req, res) => {
     const updatedUser = await Users.findByIdAndUpdate(_id, { goal }, { returnDocument: 'after' });
 
     res.status(200).json({
-        user: {
-            goal: updatedUser.goal,
-        },
+        goal: updatedUser.goal,
     });
 });
 

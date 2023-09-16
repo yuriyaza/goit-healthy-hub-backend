@@ -47,4 +47,11 @@ userRoutes.post(
     controller.foodIntake
 );
 
+userRoutes.get(
+    '/statistics',
+    middleware.authentication,
+    middleware.validateRequest(schema.validateDate),
+    controller.getStatistics
+);
+
 module.exports = { userRoutes };
