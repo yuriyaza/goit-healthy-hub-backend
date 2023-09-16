@@ -16,21 +16,35 @@ userRoutes.patch(
 );
 
 userRoutes.put(
-    "/food-intake/:id",
+    '/food-intake/:id',
     middleware.authentication,
     middleware.validateRequest(schema.foodSchema),
     controller.updatedFoodIntake
 );
 userRoutes.post(
-    "/water-intake",
+    '/water-intake',
     middleware.authentication,
     middleware.validateRequest(schema.waterSchema),
     controller.waterIntake
 );
 userRoutes.get(
-    "/recommended-food",
+    '/recommended-food',
     middleware.authentication,
     controller.getRecommendedFood
+);
+
+userRoutes.put(
+    '/weight',
+    middleware.authentication,
+    middleware.validateRequest(schema.weightSchema),
+    controller.weight
+);
+
+userRoutes.post(
+    '/food-intake',
+    middleware.authentication,
+    middleware.validateRequest(schema.foodSchema),
+    controller.foodIntake
 );
 
 module.exports = { userRoutes };

@@ -9,6 +9,7 @@ const { validateRegister } = require('./validateRegister');
 const { validateLogin } = require('./validateLogin');
 const { validateEmail } = require('./validateEmail');
 const { validateGoal } = require('./validateGoal');
+const { weightSchema } = require('./weightSchema');
 
 module.exports = {
     Users,
@@ -22,4 +23,5 @@ module.exports = {
     validateGoal,
     foodSchema,
     waterSchema,
+    weightSchema,
 };
