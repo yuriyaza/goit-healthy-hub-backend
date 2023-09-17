@@ -11,7 +11,7 @@ function nutrientsByFoodType(foodData, foodType) {
     if (foodData) {
         foodData[foodType].forEach(dish => {
             nutrients.calories = nutrients.calories + dish.calories;
-            nutrients.carbohydrates = nutrients.carbohydrates + dish.calories;
+            nutrients.carbohydrates = nutrients.carbohydrates + dish.carbohydrates;
             nutrients.protein = nutrients.protein + dish.protein;
             nutrients.fat = nutrients.fat + dish.fat;
         });
