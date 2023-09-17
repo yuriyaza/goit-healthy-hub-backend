@@ -34,7 +34,7 @@ const loginUser = asyncHandler(async (req, res) => {
         activity: loggedUser.activity,
         goal: loggedUser.goal,
         avatar: loggedUser.avatar,
-        token,
+        token: loggedUser.token,
     });
 });
 
