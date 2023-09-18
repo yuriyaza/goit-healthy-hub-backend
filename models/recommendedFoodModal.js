@@ -3,14 +3,9 @@ const { handleMongooseError } = require('../utils/handleMongooseError');
 
 const recommendedFoodSchema = new Schema(
     {
-        name: String,
-        amount: String,
-        img: String,
-        calories: Number,
-        nutrition: {
-            carbohydrates: Number,
-            protein: Number,
-            fat: Number,
+        count: {
+            type: Number,
+            required: [true, 'Сount is required'],
         },
     },
     { versionKey: false, timestamps: true }
