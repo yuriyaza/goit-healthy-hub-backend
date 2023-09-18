@@ -21,7 +21,7 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 
     const payload = { id: user._id };
-    const token = jwt.sign(payload, TOKEN_KEY, { expiresIn: '24h' });
+    const token = jwt.sign(payload, TOKEN_KEY, { expiresIn: '30d' });
     const loggedUser = await Users.findByIdAndUpdate(user._id, { token }, { returnDocument: 'after' });
 
     res.status(201).json({
@@ -34,7 +34,7 @@ const loginUser = asyncHandler(async (req, res) => {
         activity: loggedUser.activity,
         goal: loggedUser.goal,
         avatar: loggedUser.avatar,
-        token,
+        token: loggedUser.token,
     });
 });
 

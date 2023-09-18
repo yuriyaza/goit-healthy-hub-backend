@@ -34,4 +34,31 @@ userRoutes.get(
     controller.getRecommendedFood
 );
 
+userRoutes.put(
+    '/weight',
+    middleware.authentication,
+    middleware.validateRequest(schema.weightSchema),
+    controller.weight
+);
+
+userRoutes.post(
+    '/food-intake',
+    middleware.authentication,
+    middleware.validateRequest(schema.foodSchema),
+    controller.foodIntake
+);
+
+userRoutes.get(
+    '/statistics',
+    middleware.authentication,
+    middleware.validateRequest(schema.validateDate),
+    controller.getStatistics
+);
+
+userRoutes.get(
+    '/graph',
+    middleware.authentication,
+    controller.getGraph
+);
+
 module.exports = { userRoutes };

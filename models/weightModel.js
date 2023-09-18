@@ -4,12 +4,7 @@ const weightDBSchema = new mongoose.Schema(
     {
         date: {
             type: Date,
-            required: [true, 'Date is required'],
             default: Date.now(),
-        },
-        owner: {
-            type: String,
-            required: [true, 'Owner is required'],
         },
         weight: {
             type: Number,
