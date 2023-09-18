@@ -8,7 +8,9 @@ const getStatistics = asyncHandler(async (req, res) => {
 
     const beginDate = new Date(requestDate);
     const endDate = new Date(requestDate);
-    endDate.setDate(endDate.getDate() + 1); // Збільшуємо на 1 день
+    beginDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+    endDate.setDate(endDate.getDate() + 1); // Наступний день + вибірка по $lt = вибірка до кінця поточного дня
 
     const foodData = await Food.findOne({ owner, date: { $gte: beginDate, $lt: endDate } });
     const waterData = await Water.findOne({ owner, date: { $gte: beginDate, $lt: endDate } });

@@ -54,4 +54,10 @@ userRoutes.get(
     controller.getStatistics
 );
 
+userRoutes.get(
+    '/graph',
+    middleware.authentication,
+    controller.getGraph
+);
+
 module.exports = { userRoutes };

@@ -5,6 +5,8 @@ const { handleMongooseError } = require('./handleMongooseError');
 const { calculateBMR } = require('./calculateBMR');
 const { nutrientsByFoodType } = require('./nutrientsByFoodType');
 const { nutrientsTotalPerDay } = require('./nutrientsTotalPerDay');
+const { createPeriod } = require('./createPeriod');
+const { createGraphData } = require('./createGraphData');
 
 module.exports = {
     asyncHandler,
@@ -14,4 +16,6 @@ module.exports = {
     calculateBMR,
     nutrientsByFoodType,
     nutrientsTotalPerDay,
+    createPeriod,
+    createGraphData,
 };

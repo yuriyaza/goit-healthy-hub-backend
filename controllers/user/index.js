@@ -9,6 +9,7 @@ const { getRecommendedFood } = require('./getRecommendedFood');
 const { weight } = require('./weight');
 const { foodIntake } = require('./foodIntake');
 const { getStatistics } = require('./getStatistics');
+const { getGraph } = require('./getGraph');
 
 module.exports = {
     addGoal,
@@ -18,4 +19,5 @@ module.exports = {
     weight,
     foodIntake,
     getStatistics,
+    getGraph,
 };
