@@ -10,6 +10,10 @@ const weightDBSchema = new mongoose.Schema(
             type: Number,
             required: [true, 'Weight is required'],
         },
+        owner: {
+            type: String,
+            required: [true, 'Owner is required'],
+        },
     },
 
     { versionKey: false, timestamps: true }
