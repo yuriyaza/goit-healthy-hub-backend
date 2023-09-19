@@ -7,7 +7,7 @@ const getRecommendedFood = async (req, res) => {
 
     const countValid = Number(count);
     if (!countValid || !Number.isInteger(countValid)) {
-        throwHttpError(400, 'Period not specified or incorrect');
+        throwHttpError(400, 'Count not specified or incorrect');
     }
 
     const allRecommendedFood = await RecommendedFood.find();
