@@ -7,6 +7,7 @@ const { nutrientsByFoodType } = require('./nutrientsByFoodType');
 const { nutrientsTotalPerDay } = require('./nutrientsTotalPerDay');
 const { createPeriod } = require('./createPeriod');
 const { createGraphData } = require('./createGraphData');
+const { createGraphLabels } = require('./createGraphLabels');
 
 module.exports = {
     asyncHandler,
@@ -18,4 +19,5 @@ module.exports = {
     nutrientsTotalPerDay,
     createPeriod,
     createGraphData,
+    createGraphLabels,
 };

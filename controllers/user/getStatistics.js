@@ -3,7 +3,7 @@ const { nutrientsByFoodType, nutrientsTotalPerDay, asyncHandler } = require('../
 
 const getStatistics = asyncHandler(async (req, res) => {
     const user = req.user;
-    const owner = req.user._id;
+    const owner = String(req.user._id);
     const requestDate = req.body.date || new Date();
 
     const beginDate = new Date(requestDate);

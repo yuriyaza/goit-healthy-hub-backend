@@ -61,4 +61,10 @@ userRoutes.get(
     controller.getGraph
 );
 
+userRoutes.get(
+    '/graph-v2',
+    middleware.authentication,
+    controller.getGraphV2
+);
+
 module.exports = { userRoutes };
