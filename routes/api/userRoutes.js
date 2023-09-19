@@ -30,7 +30,6 @@ userRoutes.post(
 userRoutes.get(
     '/recommended-food',
     middleware.authentication,
-    middleware.validateRequest(schema.recommendedFoodSchema),
     controller.getRecommendedFood
 );
 
