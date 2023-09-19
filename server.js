@@ -8,7 +8,7 @@ const { DB_HOST } = process.env;
 
 async function databaseConnect() {
     try {
-        mongoose.set('strictQuery', true);
+        mongoose.set('strictQuery', false);
         const database = await mongoose.connect(DB_HOST);
         console.log(`\nDatabase connected successful: ${database.connection.name}`);
     } catch (error) {

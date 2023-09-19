@@ -8,8 +8,12 @@ const waterModal = new Schema(
             default: Date.now(),
         },
         water: {
-            type: Number, 
+            type: Number,
             required: [true, 'Water is required'],
+        },
+        owner: {
+            type: String,
+            required: [true, 'Owner is required'],
         },
     },
     { versionKey: false, timestamps: true }
