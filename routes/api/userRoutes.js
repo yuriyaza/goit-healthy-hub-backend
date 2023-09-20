@@ -66,4 +66,11 @@ userRoutes.get(
     controller.getGraphV2
 );
 
+userRoutes.get(
+    '/food-intake',
+    middleware.authentication,
+    middleware.validateRequest(schema.foodSchema),
+    controller.getFoodIntake
+);
+
 module.exports = { userRoutes };

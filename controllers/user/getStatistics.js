@@ -9,11 +9,10 @@ const getStatistics = asyncHandler(async (req, res) => {
     const beginDate = new Date(requestDate);
     const endDate = new Date(requestDate);
     beginDate.setHours(0, 0, 0, 0);
-    endDate.setHours(0, 0, 0, 0);
-    endDate.setDate(endDate.getDate() + 1); // Наступний день + вибірка по $lt = вибірка до кінця поточного дня
+    endDate.setHours(23, 59, 59, 999);
 
-    const foodData = await Food.findOne({ owner, date: { $gte: beginDate, $lt: endDate } });
-    const waterData = await Water.findOne({ owner, date: { $gte: beginDate, $lt: endDate } });
+    const foodData = await Food.findOne({ owner, date: { $gte: beginDate, $lte: endDate } });
+    const waterData = await Water.findOne({ owner, date: { $gte: beginDate, $lte: endDate } });
 
     const breakfast = nutrientsByFoodType(foodData, 'breakfast');
     const lunch = nutrientsByFoodType(foodData, 'lunch');
