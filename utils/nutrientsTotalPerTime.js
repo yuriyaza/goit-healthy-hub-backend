@@ -1,4 +1,4 @@
-function nutrientsByFoodType(foodData, foodType) {
+function nutrientsTotalPerTime(foodData) {
     // Створюємо об'єкт з початковими значеннями
     const nutrients = {
         calories: 0,
@@ -7,13 +7,13 @@ function nutrientsByFoodType(foodData, foodType) {
         fat: 0,
     };
 
-    // Якщо дані про їжу внесено - додаємо їх до об'єкту по [foodType]  - сніданок, обід, вечеря, ...
+    // Якщо дані про їжу внесено - додаємо їх до об'єкту
     if (foodData) {
-        foodData[foodType].forEach(dish => {
+        foodData.forEach(dish => {
             nutrients.calories = parseFloat((nutrients.calories + dish.calories).toFixed(0));
             nutrients.carbohydrates = parseFloat((nutrients.carbohydrates + dish.carbohydrates).toFixed(2));
             nutrients.protein = parseFloat((nutrients.protein + dish.protein).toFixed(2));
-            nutrients.fat = parseFloat((nutrients.fat + dish.fat).toFixed(2));
+            nutrients.fat = parseFloat((nutrients.fat + dish.fat).toFixed(3));
         });
     }
 
@@ -22,4 +22,4 @@ function nutrientsByFoodType(foodData, foodType) {
     return nutrients;
 }
 
-module.exports = { nutrientsByFoodType };
+module.exports = { nutrientsTotalPerTime };
