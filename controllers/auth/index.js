@@ -7,6 +7,7 @@ const { loginUser } = require('./loginUser');
 const { logoutUser } = require('./logoutUser');
 const { restorePassword } = require('./restorePassword');
 const { updateAvatar } = require('./updateAvatar');
+const { userSettings } = require('./userSettings');
 
 module.exports = {
     currentUser,
@@ -15,4 +16,5 @@ module.exports = {
     logoutUser,
     restorePassword,
     updateAvatar,
+    userSettings,
 };

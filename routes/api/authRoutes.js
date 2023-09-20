@@ -46,4 +46,11 @@ authRoutes.patch(
     controller.updateAvatar
 );
 
+authRoutes.patch(
+    '/settings',
+    middleware.authentication,
+    middleware.validateRequest(schema.validateSettings),
+    controller.userSettings
+);
+
 module.exports = { authRoutes };
