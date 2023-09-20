@@ -7,25 +7,25 @@ const foodIntake = asyncHandler(async (req, res) => {
     const { date, breakfast, lunch, dinner, snack } = req.body;
 
     try {
-        let existingFoodEntry = await Food.findOne({ owner, date });
+        const currentDate = new Date(date);
+        const startOfDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+        const endOfDay = new Date(startOfDay);
+        endOfDay.setHours(23, 59, 59, 999);
+
+        let existingFoodEntry = await Food.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
 
         if (existingFoodEntry) {
-            const existingBreakfast = existingFoodEntry.breakfast || [];
-            const existingLunch = existingFoodEntry.lunch || [];
-            const existingDinner = existingFoodEntry.dinner || [];
-            const existingSnack = existingFoodEntry.snack || [];
-
             if (breakfast) {
-                existingFoodEntry.breakfast = existingBreakfast.concat(breakfast);
+                existingFoodEntry.breakfast = existingFoodEntry.breakfast.concat(breakfast);
             }
             if (lunch) {
-                existingFoodEntry.lunch = existingLunch.concat(lunch);
+                existingFoodEntry.lunch = existingFoodEntry.lunch.concat(lunch);
             }
             if (dinner) {
-                existingFoodEntry.dinner = existingDinner.concat(dinner);
+                existingFoodEntry.dinner = existingFoodEntry.dinner.concat(dinner);
             }
             if (snack) {
-                existingFoodEntry.snack = existingSnack.concat(snack);
+                existingFoodEntry.snack = existingFoodEntry.snack.concat(snack);
             }
 
             await existingFoodEntry.save();
@@ -33,7 +33,7 @@ const foodIntake = asyncHandler(async (req, res) => {
         } else {
             const foodEntry = new Food({
                 owner,
-                date,
+                date: currentDate,
                 breakfast,
                 lunch,
                 dinner,
