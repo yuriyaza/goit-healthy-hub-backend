@@ -15,20 +15,20 @@ const waterIntake = asyncHandler(async (req, res) => {
 
     // Перевіряємо, чи вносив вже поточний користувач дані за поточну добу
     const currentUserAndDay = await Water.findOne({ owner, date: { $gte: beginDate, $lte: endDate } });
+    let savedUserAndDay = null;
 
     // Якщо не вносив - створюємо новий запис, якщо вносив - оновлюємо існуючий
-    let updatedUserAndDay = null;
     if (!currentUserAndDay) {
-        updatedUserAndDay = await Water.create({ date: currentDate, water: newWater, owner });
+        savedUserAndDay = await Water.create({ date: currentDate, water: newWater, owner });
     } else {
         const currentWaterIntake = currentUserAndDay.water;
         const updatedWaterIntake = currentWaterIntake + newWater;
-        updatedUserAndDay = await Water.findByIdAndUpdate(currentUserAndDay._id, { water: updatedWaterIntake }, { new: true });
+        savedUserAndDay = await Water.findByIdAndUpdate(currentUserAndDay._id, { water: updatedWaterIntake }, { new: true });
     }
 
     res.status(200).json({
         addedWater: newWater,
-        totalWater: updatedUserAndDay.water,
+        totalWater: savedUserAndDay.water,
     });
 });
 
