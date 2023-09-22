@@ -9,6 +9,7 @@ const { nutrientsTotalPerTime } = require('./nutrientsTotalPerTime');
 const { createPeriod } = require('./createPeriod');
 const { createGraphData } = require('./createGraphData');
 const { createGraphLabels } = require('./createGraphLabels');
+const { uploadToCloudinary } = require('./uploadToCloudinary');
 
 module.exports = {
     asyncHandler,
@@ -22,4 +23,5 @@ module.exports = {
     createPeriod,
     createGraphData,
     createGraphLabels,
+    uploadToCloudinary,
 };

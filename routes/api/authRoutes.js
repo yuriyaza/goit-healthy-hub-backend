@@ -41,8 +41,7 @@ authRoutes.post(
 authRoutes.patch(
     '/avatar',
     middleware.authentication,
-    middleware.uploadFiles.single('avatar'),
-    // middleware.uploadCloud.single('image'),
+    middleware.downloadFromClient.single('file'),
     controller.updateAvatar
 );
 

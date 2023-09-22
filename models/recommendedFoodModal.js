@@ -5,7 +5,7 @@ const recommendedFoodSchema = new Schema(
     {
         count: {
             type: Number,
-            required: [true, 'Сount is required'],
+            required: [true, 'Count is required'],
         },
     },
     { versionKey: false, timestamps: true }
@@ -13,6 +13,6 @@ const recommendedFoodSchema = new Schema(
 
 recommendedFoodSchema.post('save', handleMongooseError);
 
-const RecommendedFood = model('recomendations', recommendedFoodSchema);
+const RecommendedFood = model('recommendeds', recommendedFoodSchema);
 
 module.exports = { RecommendedFood };
