@@ -3,8 +3,8 @@ const path = require('node:path');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const tempDir = path.join(__dirname, '..', 'temp');
-        cb(null, tempDir);
+        const destDir = path.join(__dirname, '..', 'public', 'avatars');
+        cb(null, destDir);
     },
 
     filename: function (req, file, cb) {
@@ -12,16 +12,15 @@ const storage = multer.diskStorage({
         const originalFileName = file.originalname;
         const fileExt = path.parse(originalFileName).ext;
 
-        const tempFileName = `${userID}${fileExt}`
-        cb(null, tempFileName);
+        const destFileName = `${userID}${fileExt}`;
+        cb(null, destFileName);
     },
 
     limits: {
         files: 1,
-        fileSize: 4194304,
     },
 });
 
-const uploadFiles = multer({ storage });
+const downloadFromClient = multer({ storage });
 
-module.exports = { uploadFiles };
+module.exports = { downloadFromClient };
