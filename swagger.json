@@ -32,13 +32,7 @@
         "requestBody": {
           "description": "Current's object",
           "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
-              }
-            }
-          }
+          "content": {}
         },
         "responses": {
           "201": {
@@ -59,7 +53,6 @@
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -98,7 +91,6 @@
         "tags": ["Auth"],
         "summary": "User authentication",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Login's object",
           "required": true,
@@ -499,7 +491,6 @@
       },
       "AvatarResponse": {
         "type": "object",
-        "required": ["avatar"],
         "properties": {
           "avatar": {
             "type": "string",
@@ -513,7 +504,7 @@
       },
       "SettingsResponse": {
         "type": "object",
-        "required": ["name", "gender", "age", "height", "weight", "activity", "goal"],
+
         "properties": {
           "name": {
             "type": "string",
