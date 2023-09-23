@@ -58,7 +58,7 @@ const foodIntake = asyncHandler(async (req, res) => {
         breakfastDishes = savedFoodEntry.breakfast;
         lunchDishes = savedFoodEntry.lunch;
         dinnerDishes = savedFoodEntry.dinner;
-        snackDishes = savedFoodEntry.snack;в
+        snackDishes = savedFoodEntry.snack;
     }
 
     const breakfastTotal = nutrientsTotalPerTime(breakfastDishes);
