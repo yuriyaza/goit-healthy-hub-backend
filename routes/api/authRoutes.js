@@ -45,7 +45,7 @@ authRoutes.patch(
     controller.updateAvatar
 );
 
-authRoutes.get(
+authRoutes.post(
     '/checking-registered',
     middleware.validateRequest(schema.emailSchema),
     controller.checkingRegistered
