@@ -45,6 +45,11 @@ authRoutes.patch(
     controller.updateAvatar
 );
 
+authRoutes.get(
+    '/checking-registered',
+    middleware.validateRequest(schema.emailSchema),
+    controller.checkingRegistered
+);
 authRoutes.patch(
     '/settings',
     middleware.authentication,
