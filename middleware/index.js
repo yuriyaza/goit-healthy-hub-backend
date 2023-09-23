@@ -1,11 +1,11 @@
 const { authentication } = require('./authentication');
-const { uploadFiles } = require('./uploadFiles');
+const { downloadFromClient } = require('./downloadFromClient');
 const { validateID } = require('./validateID');
 const { validateRequest } = require('./validateRequest');
 
 module.exports = {
     authentication,
-    uploadFiles,
+    downloadFromClient,
     validateID,
     validateRequest,
 };

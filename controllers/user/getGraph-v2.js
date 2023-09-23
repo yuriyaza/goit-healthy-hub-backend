@@ -1,9 +1,9 @@
 const format = require('date-fns/format');
 
 const { Food, Water, Weight } = require('../../models');
-const { createPeriod, createGraphData, asyncHandler, throwHttpError } = require('../../utils');
+const { createPeriod, createGraphData, createGraphLabels, asyncHandler, throwHttpError } = require('../../utils');
 
-const getGraph = asyncHandler(async (req, res) => {
+const getGraphV2 = asyncHandler(async (req, res) => {
     const owner = String(req.user._id);
     const daysCount = Number(req.query.period);
 
@@ -14,6 +14,9 @@ const getGraph = asyncHandler(async (req, res) => {
     const beginDate = createPeriod(daysCount).begin;
     const endDate = createPeriod(daysCount).end;
 
+    // Header
+    const labels = createGraphLabels(beginDate, endDate);
+    
     // Weight information
     const weightData = await Weight.find({ owner, date: { $gte: beginDate, $lte: endDate } }).sort({ date: 1 });
     const weightDatesList = [];
@@ -53,12 +56,12 @@ const getGraph = asyncHandler(async (req, res) => {
     const calories = createGraphData(daysCount, caloriesDatesList, caloriesValuesList);
 
     res.status(200).json({
-        beginDate: format(beginDate, 'yyyy-MM-dd'),
-        endDate: format(endDate, 'yyyy-MM-dd'),
-        calories,
-        water,
-        weight,
+        labels,
+        days: calories.days,
+        calories: calories.values,
+        water: water.values,
+        weight: weight.values,
     });
 });
 
-module.exports = { getGraph };
+module.exports = { getGraphV2 };

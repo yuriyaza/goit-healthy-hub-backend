@@ -3,7 +3,7 @@ const path = require('node:path');
 const jwt = require('jsonwebtoken');
 
 const { Users } = require('../../models');
-const { asyncHandler, throwHttpError } = require('../../utils');
+const { uploadToCloudinary, asyncHandler, throwHttpError } = require('../../utils');
 
 require('dotenv').config();
 const { TOKEN_KEY } = process.env;
@@ -17,8 +17,14 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const defaultAvatar = path.join(__dirname, '..', '..', 'public', 'avatars', 'default.png');
-    const registeredUser = await Users.create({ ...req.body, avatar: defaultAvatar, password: hashedPassword });
+    const uploadedAvatar = await uploadToCloudinary(defaultAvatar);
+    if (!uploadedAvatar) {
+        throwHttpError('500', 'Error uploading avatar to File Server');
+    }
+
+    const registeredUser = await Users.create({ ...req.body, avatar: uploadedAvatar.secure_url, password: hashedPassword });
 
     const payload = { id: registeredUser._id };
     const token = jwt.sign(payload, TOKEN_KEY, { expiresIn: '30d' });

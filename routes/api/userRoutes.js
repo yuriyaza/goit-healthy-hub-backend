@@ -40,13 +40,6 @@ userRoutes.put(
     controller.weight
 );
 
-userRoutes.post(
-    '/food-intake',
-    middleware.authentication,
-    middleware.validateRequest(schema.foodSchema),
-    controller.foodIntake
-);
-
 userRoutes.get(
     '/statistics',
     middleware.authentication,
@@ -58,6 +51,35 @@ userRoutes.get(
     '/graph',
     middleware.authentication,
     controller.getGraph
+);
+
+userRoutes.get(
+    '/graph-v2',
+    middleware.authentication,
+    controller.getGraphV2
+);
+
+userRoutes.get(
+    '/food-intake',
+    middleware.authentication,
+    middleware.validateRequest(schema.foodSchema),
+    controller.getFoodIntake
+);
+
+
+userRoutes.post(
+    '/food-intake',
+    middleware.authentication,
+    middleware.validateRequest(schema.foodSchema),
+    controller.foodIntake
+);
+
+
+userRoutes.post(
+    '/food-intake-v2',
+    middleware.authentication,
+    middleware.validateRequest(schema.foodSchema),
+    controller.foodIntakeV2
 );
 
 module.exports = { userRoutes };

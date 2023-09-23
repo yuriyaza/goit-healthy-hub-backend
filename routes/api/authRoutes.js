@@ -41,7 +41,7 @@ authRoutes.post(
 authRoutes.patch(
     '/avatar',
     middleware.authentication,
-    middleware.uploadFiles.single('avatar'),
+    middleware.downloadFromClient.single('file'),
     controller.updateAvatar
 );
 
@@ -49,6 +49,12 @@ authRoutes.get(
     '/checking-registered',
     middleware.validateRequest(schema.emailSchema),
     controller.checkingRegistered
+);
+authRoutes.patch(
+    '/settings',
+    middleware.authentication,
+    middleware.validateRequest(schema.validateSettings),
+    controller.userSettings
 );
 
 module.exports = { authRoutes };

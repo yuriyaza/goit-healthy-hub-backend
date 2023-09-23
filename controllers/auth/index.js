@@ -8,6 +8,7 @@ const { logoutUser } = require('./logoutUser');
 const { restorePassword } = require('./restorePassword');
 const { updateAvatar } = require('./updateAvatar');
 const { checkingRegistered } = require('./checkingRegistered');
+const { userSettings } = require('./userSettings');
 
 module.exports = {
     currentUser,
@@ -17,4 +18,5 @@ module.exports = {
     restorePassword,
     updateAvatar,
     checkingRegistered,
+    userSettings,
 };

@@ -12,6 +12,7 @@ const { validateGoal } = require('./validateGoal');
 const { weightSchema } = require('./weightSchema');
 const { validateDate } = require('./validateDate');
 const { emailSchema } = require('./checkingRegisteredSchema');
+const { validateSettings } = require('./validateSettings');
 
 module.exports = {
     Users,
@@ -28,4 +29,5 @@ module.exports = {
     weightSchema,
     validateDate,
     emailSchema,
+    validateSettings,
 };
