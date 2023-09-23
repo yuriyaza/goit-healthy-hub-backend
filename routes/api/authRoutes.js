@@ -45,4 +45,10 @@ authRoutes.patch(
     controller.updateAvatar
 );
 
+authRoutes.get(
+    '/checking-registered',
+    middleware.validateRequest(schema.emailSchema),
+    controller.checkingRegistered
+);
+
 module.exports = { authRoutes };
