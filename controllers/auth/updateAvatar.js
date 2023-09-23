@@ -16,15 +16,16 @@ const updateAvatar = asyncHandler(async (req, res) => {
     sharp(sourceFile).resize(200, 200, 'contain');
     
     const uploadedFile = await uploadToCloudinary(sourceFile);
-    if (!uploadedFile) { 
-        throwHttpError('500', 'Error uploading avatar to File Server');
-    }
+    // if (!uploadedFile) { 
+    //     throwHttpError('500', 'Error uploading avatar to File Server');
+    // }
     await fs.unlink(sourceFile);
     
     const updatedUser = await Users.findByIdAndUpdate(_id, { avatar: uploadedFile.secure_url }, { returnDocument: 'after' });
 
     res.status(200).json({
         avatar: updatedUser.avatar,
+        massage: uploadedFile,
     });
 });
 
