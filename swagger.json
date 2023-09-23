@@ -26,11 +26,11 @@
     "/auth/current": {
       "get": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "Get current user info",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Current's object",
           "required": true,
           "content": {
             "application/json": {
@@ -50,14 +50,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
-            "content": {}
           }
         }
       }
@@ -90,12 +82,12 @@
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
+          "409": {
+            "description": "User already exist",
             "content": {}
           },
-          "409": {
-            "description": "Provided email already exists",
+          "500": {
+            "description": "Error uploading avatar to File Server",
             "content": {}
           }
         }
@@ -104,16 +96,16 @@
     "/auth/login": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "User authentication",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Login's object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/LoginRequest"
               }
             }
           }
@@ -129,12 +121,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
+          "401": {
+            "description": "Incorrect email or password",
             "content": {}
           }
         }
@@ -143,11 +131,11 @@
     "/auth/logout": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "Logout",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Logout's object",
           "required": true,
           "content": {
             "application/json": {
@@ -158,22 +146,8 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
+          "200": {
+            "description": "Logout successful",
             "content": {}
           }
         }
@@ -182,37 +156,27 @@
     "/auth/restore": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "Restore password",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Restore's object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/RestoreRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request (invalid request body)",
+          "200": {
+            "description": "New password sent to email",
             "content": {}
           },
-          "409": {
-            "description": "Provided email already exists",
+          "400": {
+            "description": "User not found",
             "content": {}
           }
         }
@@ -221,7 +185,7 @@
     "/auth/avatar": {
       "patch": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "User avatar",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -230,28 +194,28 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/AvatarResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
+            "description": "File not specified",
             "content": {}
           },
-          "409": {
-            "description": "Provided email already exists",
+          "500": {
+            "description": "Error uploading avatar to File Server",
             "content": {}
           }
         }
@@ -260,7 +224,7 @@
     "/auth/settings": {
       "patch": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "User settings",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -269,7 +233,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/SettingsRequest"
               }
             }
           }
@@ -280,17 +244,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/SettingsResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
-          "409": {
-            "description": "Provided email already exists",
+            "description": "User nof found",
             "content": {}
           }
         }
@@ -340,6 +300,62 @@
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
+        "required": ["name", "email", "password", "gender", "age", "height", "weight", "activity", "goal"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Dave"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "gender": {
+            "type": "string",
+            "description": "User's gender",
+            "example": "Male"
+          },
+          "age": {
+            "type": "number",
+            "description": "User's age",
+            "example": "25"
+          },
+          "height": {
+            "type": "number",
+            "description": "User's height",
+            "example": "180"
+          },
+          "weight": {
+            "type": "number",
+            "description": "User's weight",
+            "example": "70"
+          },
+          "activity": {
+            "type": "number",
+            "description": "User's activity",
+            "example": "1.5"
+          },
+          "goal": {
+            "type": "string",
+            "description": "User's goal",
+            "example": "Gain muscle"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
         "required": ["email", "password"],
         "properties": {
           "email": {
@@ -354,27 +370,202 @@
           }
         }
       },
+      "RestoreRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      },
+      "SettingsRequest": {
+        "type": "object",
+        "required": ["name", "gender", "age", "height", "weight", "activity", "goal"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Dave"
+          },
+          "gender": {
+            "type": "string",
+            "description": "User's gender",
+            "example": "Male"
+          },
+          "age": {
+            "type": "number",
+            "description": "User's age",
+            "example": "25"
+          },
+          "height": {
+            "type": "number",
+            "description": "User's height",
+            "example": "180"
+          },
+          "weight": {
+            "type": "number",
+            "description": "User's weight",
+            "example": "70"
+          },
+          "activity": {
+            "type": "number",
+            "description": "User's activity",
+            "example": "1.5"
+          },
+          "goal": {
+            "type": "string",
+            "description": "User's goal",
+            "example": "Gain muscle"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
+          }
+        }
+      },
       "RegistrationResponse": {
-        "type": "array",
+        "type": "object",
         "items": {
           "type": "object",
           "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "Dave"
+            },
             "email": {
               "type": "string",
               "description": "User's email",
               "format": "email"
             },
-            "userId": {
+            "gender": {
+              "type": "string",
+              "description": "User's gender",
+              "example": "Male"
+            },
+            "age": {
               "type": "number",
-              "description": "User's id",
-              "example": "32143232436545474"
+              "description": "User's age",
+              "example": "25"
+            },
+            "height": {
+              "type": "number",
+              "description": "User's height",
+              "example": "180"
+            },
+            "weight": {
+              "type": "number",
+              "description": "User's weight",
+              "example": "70"
+            },
+            "activity": {
+              "type": "number",
+              "description": "User's activity",
+              "example": "1.5"
+            },
+            "goal": {
+              "type": "string",
+              "description": "User's goal",
+              "example": "Gain muscle"
+            },
+            "avatar": {
+              "type": "string",
+              "description": "User's avatar",
+              "example": "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
+            },
+            "token": {
+              "type": "string",
+              "description": "User's toke",
+              "example": "1"
             }
           }
         },
-        "example": [
-          { "email": "1@gmail.com", "userId": "1" },
-          { "email": "2@gmail.com", "userId": "2" }
-        ]
+        "example": {
+          "name": "Ariana",
+          "email": "1@mail.com",
+          "gender": "Female",
+          "age": "21",
+          "height": "170",
+          "weight": "55",
+          "activity": "1.75",
+          "goal": "Maintain",
+          "avatar": "https://png.pngitem.com/pimgs/s/22-223925_female-avatar-female-avatar-no-face-hd-png.png",
+          "token": "1"
+        }
+      },
+      "AvatarResponse": {
+        "type": "object",
+        "required": ["avatar"],
+        "properties": {
+          "avatar": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
+          }
+        },
+        "example": {
+          "avatar": "https://png.pngitem.com/pimgs/s/22-223925_female-avatar-female-avatar-no-face-hd-png.png"
+        }
+      },
+      "SettingsResponse": {
+        "type": "object",
+        "required": ["name", "gender", "age", "height", "weight", "activity", "goal"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Dave"
+          },
+          "gender": {
+            "type": "string",
+            "description": "User's gender",
+            "example": "Male"
+          },
+          "age": {
+            "type": "number",
+            "description": "User's age",
+            "example": "25"
+          },
+          "height": {
+            "type": "number",
+            "description": "User's height",
+            "example": "180"
+          },
+          "weight": {
+            "type": "number",
+            "description": "User's weight",
+            "example": "70"
+          },
+          "activity": {
+            "type": "number",
+            "description": "User's activity",
+            "example": "1.5"
+          },
+          "goal": {
+            "type": "string",
+            "description": "User's goal",
+            "example": "Gain muscle"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "User's avatar",
+            "example": "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
+          }
+        },
+        "example": {
+          "name": "Ariana",
+          "gender": "Female",
+          "age": "21",
+          "height": "170",
+          "weight": "55",
+          "activity": "1.75",
+          "goal": "Maintain",
+          "avatar": "https://png.pngitem.com/pimgs/s/22-223925_female-avatar-female-avatar-no-face-hd-png.png"
+        }
       }
     },
     "securitySchemes": {
