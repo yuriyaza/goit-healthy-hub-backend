@@ -1,5 +1,5 @@
 const { Food, Water } = require('../../models');
-const { nutrientsTotalPerTime, nutrientsByFoodType, nutrientsTotalPerDay, asyncHandler } = require('../../utils');
+const { nutrientsTotalPerTime, nutrientsTotalPerDay, asyncHandler } = require('../../utils');
 
 const foodIntake = asyncHandler(async (req, res) => {
     const user = req.user;
@@ -61,10 +61,13 @@ const foodIntake = asyncHandler(async (req, res) => {
         snackDishes = savedFoodEntry.snack;
     }
 
+    const existingWaterEntry = await Water.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
+
     const breakfastTotal = nutrientsTotalPerTime(breakfastDishes);
     const lunchTotal = nutrientsTotalPerTime(lunchDishes);
     const dinnerTotal = nutrientsTotalPerTime(dinnerDishes);
     const snackTotal = nutrientsTotalPerTime(snackDishes);
+    const nutrientsTotal = nutrientsTotalPerDay(user, existingWaterEntry, savedFoodEntry);
 
     res.status(200).json({
         breakfast: breakfastTotal,
@@ -75,6 +78,7 @@ const foodIntake = asyncHandler(async (req, res) => {
         lunchDishes,
         dinnerDishes,
         snackDishes,
+        total: nutrientsTotal,
     });
 });
 
