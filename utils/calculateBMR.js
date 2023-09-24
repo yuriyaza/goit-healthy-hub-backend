@@ -19,30 +19,30 @@ function calculateBMR(user) {
 
     switch (goal.toLowerCase()) {
         case 'lose fat':
-            protein = parseFloat((calories * 0.3).toFixed(2));
-            fat = parseFloat((calories * 0.25).toFixed(2));
-            carbohydrates = parseFloat((calories - protein - fat).toFixed(2));
+            protein = parseFloat(((calories * 0.3) / 4.1).toFixed(2));
+            fat = parseFloat(((calories * 0.25) / 9.3).toFixed(2));
+            carbohydrates = parseFloat(((calories * (1 - 0.3 - 0.25)) / 4.1).toFixed(2));
             break;
 
         case 'gain muscle':
-            protein = parseFloat((calories * 0.35).toFixed(2));
-            fat = parseFloat((calories * 0.25).toFixed(2));
-            carbohydrates = parseFloat((calories - protein - fat).toFixed(2));
+            protein = parseFloat(((calories * 0.35) / 4.1).toFixed(2));
+            fat = parseFloat(((calories * 0.25) / 9.3).toFixed(2));
+            carbohydrates = parseFloat(((calories * (1 - 0.35 - 0.25)) / 4.1).toFixed(2));
             break;
 
         default:
-            protein = parseFloat((calories * 0.25).toFixed(2));
-            fat = parseFloat((calories * 0.3).toFixed(2));
-            carbohydrates = parseFloat((calories - protein - fat).toFixed(2));
+            protein = parseFloat(((calories * 0.25) / 4.1).toFixed(2));
+            fat = parseFloat(((calories * 0.3) / 9.3).toFixed(2));
+            carbohydrates = parseFloat(((calories * (1 - 0.25 - 0.3)) / 4.1).toFixed(2));
             break;
     }
 
     const BMR = {
-    calories,
-    protein,
-    fat,
-    carbohydrates,
-    }
+        calories,
+        protein,
+        fat,
+        carbohydrates,
+    };
 
     return BMR;
 }
