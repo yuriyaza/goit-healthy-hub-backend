@@ -29,11 +29,7 @@
         "summary": "Get current user info",
         "parameters": [],
         "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Current's object",
-          "required": true,
-          "content": {}
-        },
+        "requestBody": {},
         "responses": {
           "201": {
             "description": "Successful operation",
@@ -180,17 +176,7 @@
         "summary": "User avatar",
         "parameters": [],
         "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Registration's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/"
-              }
-            }
-          }
-        },
+        "requestBody": {},
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -220,7 +206,7 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Settings' object",
           "required": true,
           "content": {
             "application/json": {
@@ -251,38 +237,328 @@
     "/user/goal": {
       "patch": {
         "tags": ["User"],
-        "summary": "User registration",
+        "summary": "User's goal",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Goal's object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "$ref": "#/components/schemas/GoalRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "$ref": "#/components/schemas/GoalResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/food-intake/:id": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Put user's food-intake by id",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Food-IntakeByIdResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/water-intake": {
+      "post": {
+        "tags": ["User"],
+        "summary": "User's water-intake",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Water-Intake's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Water-IntakeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Water-IntakeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/recommended-food": {
+      "get": {
+        "tags": ["User"],
+        "summary": "User's recommended food",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "count",
+            "required": true,
+            "type": "number",
+            "description": "Count of food"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecommendedFoodResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
+            "description": "Count not specified or incorrect",
             "content": {}
           },
-          "409": {
-            "description": "Provided email already exists",
+          "404": {
+            "description": "Not Found",
             "content": {}
+          }
+        }
+      }
+    },
+    "/user/weight": {
+      "put": {
+        "tags": ["User"],
+        "summary": "User's weight",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Weight's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeightRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeightResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/statistics": {
+      "get": {
+        "tags": ["User"],
+        "summary": "User's statistics",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/graph": {
+      "get": {
+        "tags": ["User"],
+        "summary": "User's graph",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "period",
+            "required": true,
+            "type": "number",
+            "description": "Period"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Period not specified or incorrect",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/graph-v2": {
+      "get": {
+        "tags": ["User"],
+        "summary": "User's graph v2",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "period",
+            "required": true,
+            "type": "number",
+            "description": "Period"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GraphV2Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Period not specified or incorrect",
+            "content": {}
+          }
+        }
+      }
+    },
+    "1/user/food-intake": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get user's food-intake. WARNING: don't put 1 into request",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetFoodIntakeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/food-intake": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Post user's food-intake",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Food-Intake's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Food-IntakeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Food-IntakeByIdResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error saving food entry",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/user/food-intake-v2": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Post user's food-intake-v2",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Food-Intake's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Food-IntakeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -417,6 +693,86 @@
             "description": "User's avatar",
             "example": "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
           }
+        }
+      },
+      "GoalRequest": {
+        "type": "object",
+        "required": ["goal"],
+        "properties": {
+          "goal": {
+            "type": "string",
+            "description": "User's goal",
+            "example": "Maintain"
+          }
+        }
+      },
+      "Water-IntakeRequest": {
+        "type": "object",
+        "required": ["water"],
+        "properties": {
+          "water": {
+            "type": "number",
+            "description": "User's water",
+            "example": 100
+          }
+        }
+      },
+      "WeightRequest": {
+        "type": "object",
+        "required": ["weight"],
+        "properties": {
+          "weight": {
+            "type": "number",
+            "description": "User's weight",
+            "example": 80
+          }
+        }
+      },
+      "FoodIntakeRequest": {
+        "type": "object",
+        "required": ["date"],
+        "properties": {
+          "date": {
+            "type": "date",
+            "description": "User's date",
+            "example": "2023-09-20"
+          },
+          "breakfast": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "lunch": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "dinner": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "snack": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ]
         }
       },
       "RegistrationResponse": {
@@ -556,6 +912,461 @@
           "activity": "1.75",
           "goal": "Maintain",
           "avatar": "https://png.pngitem.com/pimgs/s/22-223925_female-avatar-female-avatar-no-face-hd-png.png"
+        }
+      },
+      "GoalResponse": {
+        "type": "object",
+        "properties": {
+          "goal": {
+            "type": "string",
+            "description": "User's goal",
+            "example": "Maintain"
+          }
+        },
+        "example": {
+          "goal": "Gain muscle"
+        }
+      },
+      "Food-IntakeByIdResponse": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "date",
+            "description": "User's date",
+            "example": "2023-09-20"
+          },
+          "breakfast": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "lunch": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "dinner": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "snack": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ]
+        },
+        "example": {
+          "breakfast": [
+            { "name": "Apple", "calories": 52, "carbohydrates": 14, "protein": 0.3, "fat": 0.2 },
+            { "name": "Strawberries", "calories": 32, "carbohydrates": 7.68, "protein": 0.67, "fat": 0.3 }
+          ],
+          "lunch": [
+            { "name": "Spinach", "calories": 23, "carbohydrates": 3.6, "protein": 2.9, "fat": 0.4 },
+            { "name": "Kale", "calories": 49, "carbohydrates": 8.8, "protein": 3.3, "fat": 0.9 },
+            { "name": "Quinoa", "calories": 120, "carbohydrates": 21.3, "protein": 4.4, "fat": 1.9 }
+          ],
+          "dinner": [
+            { "name": "Greek Yogurt", "calories": 59, "carbohydrates": 3.6, "protein": 10, "fat": 0.4 },
+            { "name": "Chicken Breast", "calories": 165, "carbohydrates": 0, "protein": 31, "fat": 3.6 }
+          ]
+        }
+      },
+      "Water-IntakeResponse": {
+        "type": "object",
+        "properties": {
+          "addedWater": {
+            "type": "number",
+            "description": "User's added water",
+            "example": 500
+          },
+          "totalWater": {
+            "type": "number",
+            "description": "User's total water",
+            "example": 1100
+          }
+        },
+        "example": {
+          "addedWater": "500",
+          "totalWater": "1100"
+        }
+      },
+      "RecommendedFoodResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User's _id",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of food",
+            "example": "2023-09-24T19:12:01.312Z"
+          },
+          "amount": {
+            "type": "string",
+            "description": "Amount of food",
+            "example": "100 g"
+          },
+          "img": {
+            "type": "string",
+            "description": "Photo of food",
+            "example": "https://res.cloudinary.com/dx6ikovx1/image/upload/v1695334257/goit-healthy-hub-db/recommended/chicken_breast.png"
+          },
+          "calories": {
+            "type": "number",
+            "description": "Calories of food",
+            "example": 125
+          },
+          "nutrition": [
+            {
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ]
+        },
+        "example": [
+          {
+            "_id": "650cc85c3fdece006c68dc66",
+            "name": "Chicken Breast",
+            "amount": "100 g",
+            "img": "https://res.cloudinary.com/dx6ikovx1/image/upload/v1695334257/goit-healthy-hub-db/recommended/chicken_breast.png",
+            "calories": 165,
+            "nutrition": {
+              "carbohydrates": 0,
+              "protein": 31,
+              "fat": 3.6
+            }
+          }
+        ]
+      },
+      "WeightResponse": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "date",
+            "description": "User's date",
+            "example": "2023-09-24T19:12:01.275Z"
+          },
+          "weight": {
+            "type": "number",
+            "description": "User's weight",
+            "example": 75
+          },
+          "owner": {
+            "type": "string",
+            "description": "owner",
+            "example": "1"
+          },
+          "_id": {
+            "type": "string",
+            "description": "User's _id",
+            "example": "1"
+          },
+          "createdAt": {
+            "type": "date",
+            "description": "User's date",
+            "example": "2023-09-24T19:12:01.312Z"
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "User's date",
+            "example": "2023-09-24T19:12:01.312Z"
+          }
+        },
+        "example": {
+          "date": "2023-09-24T19:12:01.275Z",
+          "weight": 100,
+          "owner": "650a9a6221a721f430d694d8",
+          "_id": "65108a01c51ddabe9b8a669c",
+          "createdAt": "2023-09-24T19:12:01.312Z",
+          "updatedAt": "2023-09-24T19:12:01.312Z"
+        }
+      },
+      "StatisticsResponse": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "date",
+            "description": "User's date",
+            "example": "Maintain"
+          },
+          "breakfast": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "lunch": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "dinner": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "snack": [
+            {
+              "name": "string",
+              "calories": "number",
+              "carbohydrates": "number",
+              "protein": "number",
+              "fat": "number"
+            }
+          ],
+          "total": {
+            "water": {
+              "goal": "number",
+              "used": "string"
+            },
+            "calories": {
+              "goal": "number",
+              "used": "number"
+            },
+            "carbohydrates": {
+              "goal": "number",
+              "used": "number"
+            },
+            "protein": {
+              "goal": "number",
+              "used": "number"
+            },
+            "fat": {
+              "goal": "number",
+              "used": "number"
+            }
+          }
+        },
+        "example": {
+          "date": "2023-09-24T19:35:04.610Z",
+          "breakfast": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "lunch": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "dinner": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "snack": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "total": {
+            "water": {
+              "goal": 1500,
+              "used": "100"
+            },
+            "calories": {
+              "goal": 2733,
+              "used": 0
+            },
+            "carbohydrates": {
+              "goal": 170,
+              "used": 0
+            },
+            "protein": {
+              "goal": 127.5,
+              "used": 0
+            },
+            "fat": {
+              "goal": 56,
+              "used": 0
+            }
+          }
+        }
+      },
+      "GraphResponse": {
+        "type": "object",
+        "properties": {
+          "beginDate": {
+            "type": "date",
+            "description": "User's begin date",
+            "example": "2023-09-24"
+          },
+          "endDate": {
+            "type": "date",
+            "description": "User's end date",
+            "example": "2023-09-24"
+          },
+          "calories": {
+            "days": "array",
+            "values": "array"
+          },
+          "water": {
+            "days": "array",
+            "values": "array"
+          },
+          "weight": {
+            "days": "array",
+            "values": "array"
+          }
+        },
+        "example": {
+          "beginDate": "2023-09-24",
+          "endDate": "2023-09-24",
+          "calories": {
+            "days": ["24"],
+            "values": [0]
+          },
+          "water": {
+            "days": ["24"],
+            "values": [100]
+          },
+          "weight": {
+            "days": ["24"],
+            "values": [100]
+          }
+        }
+      },
+      "GraphV2Response": {
+        "type": "object",
+        "properties": {
+          "labels": {
+            "monthLong": "string",
+            "monthShort": "string",
+            "year": "string"
+          },
+          "calories": {
+            "type": "array",
+            "description": "User's calories"
+          },
+          "water": {
+            "type": "array",
+            "description": "User's water"
+          },
+          "weight": {
+            "type": "array",
+            "description": "User's weight"
+          }
+        },
+        "example": {
+          "labels": {
+            "monthLong": "September",
+            "monthShort": "Sep",
+            "year": "2023"
+          },
+          "days": ["24"],
+          "calories": [0],
+          "water": [100],
+          "weight": [100]
+        }
+      },
+      "GetFoodIntakeResponse": {
+        "type": "object",
+        "properties": {
+          "breakfastTotal": {
+            "calories": "number",
+            "carbohydrates": "number",
+            "protein": "number",
+            "fat": "number"
+          },
+          "lunchTotal": {
+            "calories": "number",
+            "carbohydrates": "number",
+            "protein": "number",
+            "fat": "number"
+          },
+          "dinnerTotal": {
+            "calories": "number",
+            "carbohydrates": "number",
+            "protein": "number",
+            "fat": "number"
+          },
+          "snackTotal": {
+            "calories": "number",
+            "carbohydrates": "number",
+            "protein": "number",
+            "fat": "number"
+          },
+          "breakfastDishes": {
+            "type": "array",
+            "description": "User's breakfast"
+          },
+          "lunchDishes": {
+            "type": "array",
+            "description": "User's lunch"
+          },
+          "dinnerDishes": {
+            "type": "array",
+            "description": "User's dinner"
+          },
+          "snackDishes": {
+            "type": "array",
+            "description": "User's snack"
+          }
+        },
+        "example": {
+          "breakfastTotal": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "lunchTotal": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "dinnerTotal": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "snackTotal": {
+            "calories": 0,
+            "carbohydrates": 0,
+            "protein": 0,
+            "fat": 0
+          },
+          "breakfastDishes": [],
+          "lunchDishes": [],
+          "dinnerDishes": [],
+          "snackDishes": []
         }
       }
     },
