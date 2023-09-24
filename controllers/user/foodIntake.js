@@ -49,10 +49,10 @@ const foodIntake = asyncHandler(async (req, res) => {
     // const nutrientsSnack = nutrientsByFoodType(savedFoodEntry, 'snack');
     // const nutrientsTotal = nutrientsTotalPerDay(user, existingWaterEntry, savedFoodEntry);
 
-   let breakfastDishes = [];
-   let lunchDishes = [];
-   let dinnerDishes = [];
-   let snackDishes = [];
+    let breakfastDishes = [];
+    let lunchDishes = [];
+    let dinnerDishes = [];
+    let snackDishes = [];
 
     if (savedFoodEntry) {
         breakfastDishes = savedFoodEntry.breakfast;
@@ -63,6 +63,7 @@ const foodIntake = asyncHandler(async (req, res) => {
 
     const existingWaterEntry = await Water.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
 
+    // Розрахунок даних, які змінюються при додаванні їжі - для відображення змін в інтерфейсі
     const breakfastTotal = nutrientsTotalPerTime(breakfastDishes);
     const lunchTotal = nutrientsTotalPerTime(lunchDishes);
     const dinnerTotal = nutrientsTotalPerTime(dinnerDishes);
