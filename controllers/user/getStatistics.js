@@ -13,12 +13,26 @@ const getStatistics = asyncHandler(async (req, res) => {
 
     const foodData = await Food.findOne({ owner, date: { $gte: beginDate, $lte: endDate } });
     const waterData = await Water.findOne({ owner, date: { $gte: beginDate, $lte: endDate } });
-
+    
+    // Розрахунок статистики для відображення в Main Page
     const breakfast = nutrientsByFoodType(foodData, 'breakfast');
     const lunch = nutrientsByFoodType(foodData, 'lunch');
     const dinner = nutrientsByFoodType(foodData, 'dinner');
     const snack = nutrientsByFoodType(foodData, 'snack');
     const total = nutrientsTotalPerDay(user, waterData, foodData);
+
+    // Разом зі статистикою повертаємо перелік страв (сніданок, обід, вечеря...) для оновлення в store
+    let breakfastDishes = [];
+    let lunchDishes = [];
+    let dinnerDishes = [];
+    let snackDishes = [];
+
+    if (foodData) {
+        breakfastDishes = foodData.breakfast;
+        lunchDishes = foodData.lunch;
+        dinnerDishes = foodData.dinner;
+        snackDishes = foodData.snack;
+    }
 
     res.status(200).json({
         date: requestDate,
@@ -27,6 +41,10 @@ const getStatistics = asyncHandler(async (req, res) => {
         dinner,
         snack,
         total,
+        breakfastDishes,
+        lunchDishes,
+        dinnerDishes,
+        snackDishes,
     });
 });
 
