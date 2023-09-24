@@ -44,6 +44,7 @@ const foodIntakeV2 = asyncHandler(async (req, res) => {
 
     const existingWaterEntry = await Water.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
 
+    // Розрахунок даних, які змінюються при додаванні їжі - для відображення змін в інтерфейсі
     const nutrientsBreakfast = nutrientsByFoodType(savedFoodEntry, 'breakfast');
     const nutrientsLunch = nutrientsByFoodType(savedFoodEntry, 'lunch');
     const nutrientsDinner = nutrientsByFoodType(savedFoodEntry, 'dinner');
