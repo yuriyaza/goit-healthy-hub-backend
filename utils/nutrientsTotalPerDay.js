@@ -10,8 +10,11 @@ function nutrientsTotalPerDay(user, waterData, foodData) {
         fat: { goal: 56, used: 0 },
     };
 
-    // Вираховуємо денний рівень калорій, необхідний для підтримання маси тіла
-    nutrients.calories.goal = calculateBMR(user);
+    // Вираховуємо денний рівень мікроелементів, необхідний для підтримання маси тіла
+    nutrients.calories.goal = calculateBMR(user).calories;
+    nutrients.carbohydrates.goal = calculateBMR(user).carbohydrates;
+    nutrients.protein.goal = calculateBMR(user).protein;
+    nutrients.fat.goal = calculateBMR(user).fat;
 
     // Якщо дані про воду внесено - додаємо їх до об'єкту
     if (waterData) {
