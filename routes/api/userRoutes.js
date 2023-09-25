@@ -18,7 +18,8 @@ userRoutes.patch(
 userRoutes.put(
     '/food-intake/:id',
     middleware.authentication,
-    middleware.validateRequest(schema.foodSchema),
+    middleware.validateID,
+    middleware.validateRequest(schema.validateDish),
     controller.updatedFoodIntake
 );
 userRoutes.post(
@@ -66,14 +67,12 @@ userRoutes.get(
     controller.getFoodIntake
 );
 
-
 userRoutes.post(
     '/food-intake',
     middleware.authentication,
     middleware.validateRequest(schema.foodSchema),
     controller.foodIntake
 );
-
 
 userRoutes.post(
     '/food-intake-v2',
