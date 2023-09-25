@@ -14,14 +14,13 @@ const updatedFoodIntake = asyncHandler(async (req, res) => {
         fat: req.body.fat,
     };
 
-    const currentDate = new Date('2023-09-15 14:00');
-    const startOfDay = new Date(currentDate);
-    const endOfDay = new Date(currentDate);
+    const startOfDay = new Date();
+    const endOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
     endOfDay.setHours(23, 59, 59, 999);
 
     let foodData = await Food.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
-
+console.log(foodData);
     if (!foodData) {
         throwHttpError(400, 'Dish not found');
     }
