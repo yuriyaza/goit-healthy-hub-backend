@@ -10,6 +10,7 @@ const { createPeriod } = require('./createPeriod');
 const { createGraphData } = require('./createGraphData');
 const { createGraphLabels } = require('./createGraphLabels');
 const { uploadToCloudinary } = require('./uploadToCloudinary');
+const { FindAndUpdateDish } = require('./FindAndUpdateDish');
 
 module.exports = {
     asyncHandler,
@@ -24,4 +25,5 @@ module.exports = {
     createGraphData,
     createGraphLabels,
     uploadToCloudinary,
+    FindAndUpdateDish,
 };

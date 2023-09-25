@@ -3,7 +3,7 @@ const { nutrientsTotalPerTime, nutrientsTotalPerDay, asyncHandler } = require('.
 
 const foodIntake = asyncHandler(async (req, res) => {
     const user = req.user;
-    const owner = req.user._id;
+    const owner = String(req.user._id);
     const { breakfast, lunch, dinner, snack } = req.body;
     const requestDate = req.body.date || new Date();
 
@@ -41,14 +41,6 @@ const foodIntake = asyncHandler(async (req, res) => {
         savedFoodEntry = await foodEntry.save();
     }
 
-    // const existingWaterEntry = await Water.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
-
-    // const nutrientsBreakfast = nutrientsByFoodType(savedFoodEntry, 'breakfast');
-    // const nutrientsLunch = nutrientsByFoodType(savedFoodEntry, 'lunch');
-    // const nutrientsDinner = nutrientsByFoodType(savedFoodEntry, 'dinner');
-    // const nutrientsSnack = nutrientsByFoodType(savedFoodEntry, 'snack');
-    // const nutrientsTotal = nutrientsTotalPerDay(user, existingWaterEntry, savedFoodEntry);
-
     let breakfastDishes = [];
     let lunchDishes = [];
     let dinnerDishes = [];
@@ -61,9 +53,8 @@ const foodIntake = asyncHandler(async (req, res) => {
         snackDishes = savedFoodEntry.snack;
     }
 
-    const existingWaterEntry = await Water.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
-
     // Розрахунок даних, які змінюються при додаванні їжі - для відображення змін в інтерфейсі
+    const existingWaterEntry = await Water.findOne({ owner, date: { $gte: startOfDay, $lte: endOfDay } });
     const breakfastTotal = nutrientsTotalPerTime(breakfastDishes);
     const lunchTotal = nutrientsTotalPerTime(lunchDishes);
     const dinnerTotal = nutrientsTotalPerTime(dinnerDishes);

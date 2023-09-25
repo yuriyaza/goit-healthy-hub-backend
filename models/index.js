@@ -13,6 +13,7 @@ const { weightSchema } = require('./weightSchema');
 const { validateDate } = require('./validateDate');
 const { emailSchema } = require('./checkingRegisteredSchema');
 const { validateSettings } = require('./validateSettings');
+const { validateDish } = require('./validateDish');
 
 module.exports = {
     Users,
@@ -30,4 +31,5 @@ module.exports = {
     validateDate,
     emailSchema,
     validateSettings,
+    validateDish,
 };
