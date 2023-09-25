@@ -1,8 +1,10 @@
-const { Users, Weight } = require('../../models');
-const { asyncHandler } = require('../../utils');
+const { Users, Weight, Food, Water } = require('../../models');
+const { nutrientsTotalPerDay, asyncHandler } = require('../../utils');
 
 const weight = asyncHandler(async (req, res) => {
     const { _id } = req.user;
+
+    const user = req.user;
     const owner = String(_id);
 
     const currentDate = req.body.date || new Date();
@@ -30,9 +32,14 @@ const weight = asyncHandler(async (req, res) => {
         updatedUserAndDay = await Weight.findByIdAndUpdate(currentUserAndDay._id, { weight: newWeight }, { new: true });
     }
 
+    // Розрахунок даних, які змінюються при оновленні цілі - для відображення змін в інтерфейсі
+    const foodData = await Food.findOne({ owner, date: { $gte: beginDate, $lte: endDate } });
+    const waterData = await Water.findOne({ owner, date: { $gte: beginDate, $lte: endDate } });
+    const total = nutrientsTotalPerDay(user, waterData, foodData);
+
     res.status(200).json({
-        date: updatedUserAndDay.date,
         weight: updatedUserAndDay.weight,
+        total,
     });
 });
 
