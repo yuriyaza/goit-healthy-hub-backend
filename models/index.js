@@ -14,6 +14,7 @@ const { validateDate } = require('./validateDate');
 const { emailSchema } = require('./checkingRegisteredSchema');
 const { validateSettings } = require('./validateSettings');
 const { validateDish } = require('./validateDish');
+const { validateDemo } = require('./validateDemo');
 
 module.exports = {
     Users,
@@ -32,4 +33,5 @@ module.exports = {
     emailSchema,
     validateSettings,
     validateDish,
+    validateDemo,
 };
