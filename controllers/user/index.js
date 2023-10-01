@@ -13,6 +13,7 @@ const { getGraph } = require('./getGraph');
 const { getGraphV2 } = require('./getGraph-v2');
 const { getFoodIntake } = require('./getFoodIntake');
 const { foodIntakeV2 } = require('./foodIntake-v2');
+const { generateDemo } = require('./generateDemo');
 
 module.exports = {
     addGoal,
@@ -26,4 +27,5 @@ module.exports = {
     getGraphV2,
     getFoodIntake,
     foodIntakeV2,
+    generateDemo,
 };

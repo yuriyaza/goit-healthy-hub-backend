@@ -81,4 +81,11 @@ userRoutes.post(
     controller.foodIntakeV2
 );
 
+userRoutes.post(
+    '/generate-demo',
+    middleware.authentication,
+    middleware.validateRequest(schema.validateDemo),
+    controller.generateDemo
+);
+
 module.exports = { userRoutes };

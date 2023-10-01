@@ -11,6 +11,8 @@ const { createGraphData } = require('./createGraphData');
 const { createGraphLabels } = require('./createGraphLabels');
 const { uploadToCloudinary } = require('./uploadToCloudinary');
 const { FindAndUpdateDish } = require('./FindAndUpdateDish');
+const { randomInteger } = require('./randomInteger');
+const { randomDish } = require('./randomDish');
 
 module.exports = {
     asyncHandler,
@@ -26,4 +28,6 @@ module.exports = {
     createGraphLabels,
     uploadToCloudinary,
     FindAndUpdateDish,
+    randomInteger,
+    randomDish,
 };
